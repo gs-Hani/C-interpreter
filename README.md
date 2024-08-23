@@ -4,11 +4,11 @@
 A C language interpreter based on following [Crafting interperters](https://www.craftinginterpreters.com/).
 
 ## Table of Contents ##
-- [How to install/run](## How to install/run##)
-- [How to use](## How to use##)
-- [Features](## Features ##)
-- [Credits](## Credits ##)
-- [License](## License ##)
+- [How to install/run](#how-to-install/run)
+- [How to use](#how-to-use)
+- [Features](#feature)
+- [Credits](#credits)
+- [License](#license)
 
 ## How to install/run ##
 
