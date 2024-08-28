@@ -5,8 +5,9 @@
 #include "value.h"
 
 typedef enum {
-  OP_RETURN,
-} OpCode;
+	OP_CONSTANT,
+  	OP_RETURN,
+} 	OpCode;
 
 typedef struct {
 	int count;
