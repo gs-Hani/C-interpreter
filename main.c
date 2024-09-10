@@ -1,7 +1,42 @@
+#include <stdio.h> //for testing
+
 #include "chunk.h"
 #include "common.h"
 #include "debug.h"
 
+void printChunk(Chunk* chunk) {
+	printf("Count = %d\n", chunk->count);
+	printf("Capacity = %d\n", chunk->capacity);
+	printf("lineCount = %d\n", chunk->lineCount);
+	printf("lineCapacity = %d\n", chunk->lineCapacity);
+
+	printf("Codes:");
+	for (int i = 0; i< chunk->count; i++) {
+		if (i==chunk->count-1) {
+			printf(",%d\n",chunk->code[i]);
+		} else {
+			printf(",%d",chunk->code[i]);
+		}
+	}
+
+	printf("lines:");
+	for (int i = 0; i< chunk->lineCount; i++) {
+		if (i==chunk->lineCount-1) {
+			printf(",%d\n",chunk->lines[i]);
+		} else {
+			printf(",%d",chunk->lines[i]);
+		}
+	}
+
+	printf("Lines repetition:");
+	for (int i = 0; i< chunk->lineCount; i++) {
+		if (i==chunk->lineCount-1) {
+			printf(",%d\n",chunk->linesRep[i]);
+		} else {
+			printf(",%d",chunk->linesRep[i]);
+		}
+	}
+}
 
 int main(int argc, const char* argv[]) {
 	Chunk chunk;
@@ -11,9 +46,22 @@ int main(int argc, const char* argv[]) {
 
   	writeChunk(&chunk, OP_CONSTANT,123);
   	writeChunk(&chunk, constant,123);
+	writeChunk(&chunk, OP_CONSTANT,222);
+	writeChunk(&chunk, constant,222);
+	writeChunk(&chunk, OP_CONSTANT,456);
+  	writeChunk(&chunk, constant,456);
+  	writeChunk(&chunk, OP_RETURN,678);
 
-  	writeChunk(&chunk, OP_RETURN,123);
+	printChunk(&chunk);
+
 	disassembleChunk(&chunk, "test chunk");
+	getLine(&chunk,0);
+	getLine(&chunk,1);
+	getLine(&chunk,2);
+	getLine(&chunk,3);
+	getLine(&chunk,4);
+	getLine(&chunk,5);
+	getLine(&chunk,6);
   	freeChunk(&chunk);
   	return 0;
 }

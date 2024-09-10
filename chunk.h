@@ -11,9 +11,16 @@ typedef enum {
 
 typedef struct {
 	int count;
+	int lineCount;
+
   	int capacity;
+	int lineCapacity;
+
+	int* linesRep;
+
 	uint8_t* code;
 	int* lines;
+
 	ValueArray constants;
 } Chunk;
 

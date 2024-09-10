@@ -3,6 +3,33 @@
 #include "debug.h"
 #include "value.h"
 
+int getLine(Chunk* chunk, int index) {	
+//	int seq = -1;
+	int seq = index+1;
+//	for (int i=0; i < chunk->count; i++) {
+//		if (index == chunk->code[i]) {
+//			seq = i;
+//			break;
+//		}
+//	}
+
+//	if (seq == -1) {
+//		printf("Could not find opcode with the index %d\n", index);
+//		return seq;
+//	}
+	printf("init seq = %d\n", seq);
+	for (int i=0; i < chunk->lineCount; i++) {
+	
+		if (seq - chunk->linesRep[i] <= 0) {
+			printf("Opcode line with the index %d = %d where lineReps = %d and final sequence = %d\n\n", index, chunk->lines[i],chunk->linesRep[i],seq);
+			return chunk->lines[i];
+		} else {
+			seq -= chunk->linesRep[i];
+//			printf("seq = %d\n",seq);
+		}
+	}
+}
+
 static int simpleInstruction(const char* name, int offset) {
   	printf("%s\n", name);
   	return offset + 1;
@@ -10,9 +37,9 @@ static int simpleInstruction(const char* name, int offset) {
 
 static int constantInstruction(const char* name, Chunk* chunk,int offset) {
   	uint8_t constant = chunk->code[offset + 1];
-  	printf("%-16s %4d '", name, constant);
+	printf("%-16s %4d ", name, constant);
   	printValue(chunk->constants.values[constant]);
-  	printf("'\n");
+  	printf("\n");
 	return offset + 2;
 }
 
