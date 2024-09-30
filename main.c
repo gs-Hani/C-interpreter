@@ -3,6 +3,7 @@
 #include "chunk.h"
 #include "common.h"
 #include "debug.h"
+#include "vm.h"
 
 void checkSizes() {
 	printf("int = %lu\n",sizeof(int));
@@ -47,6 +48,7 @@ void printChunk(Chunk* chunk) {
 int main(int argc, const char* argv[]) {
 
 	//checkSizes();
+	initVM();
 
 	Chunk chunk;
   	initChunk(&chunk);
@@ -61,7 +63,7 @@ int main(int argc, const char* argv[]) {
   	writeChunk(&chunk, constant,456);
   	writeChunk(&chunk, OP_RETURN,678);
 
-	printChunk(&chunk);
+//	printChunk(&chunk);
 
 	disassembleChunk(&chunk, "test chunk");
 //	getLine(&chunk,0);
@@ -71,6 +73,8 @@ int main(int argc, const char* argv[]) {
 //	getLine(&chunk,4);
 //	getLine(&chunk,5);
 //	getLine(&chunk,6);
-// 	freeChunk(&chunk);
+
+	freeVM();
+ 	freeChunk(&chunk);
   	return 0;
 }
