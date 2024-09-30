@@ -66,6 +66,7 @@ int main(int argc, const char* argv[]) {
 //	printChunk(&chunk);
 
 	disassembleChunk(&chunk, "test chunk");
+
 //	getLine(&chunk,0);
 //	getLine(&chunk,1);
 //	getLine(&chunk,2);
@@ -74,6 +75,7 @@ int main(int argc, const char* argv[]) {
 //	getLine(&chunk,5);
 //	getLine(&chunk,6);
 
+	interpret(&chunk);
 	freeVM();
  	freeChunk(&chunk);
   	return 0;
