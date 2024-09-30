@@ -4,6 +4,12 @@
 #include "common.h"
 #include "debug.h"
 
+void checkSizes() {
+	printf("int = %lu\n",sizeof(int));
+	printf("uint16_t = %lu\n",sizeof(uint16_t));
+	printf("double = %lu\n",sizeof(double));
+}
+
 void printChunk(Chunk* chunk) {
 	printf("Count = %d\n", chunk->count);
 	printf("Capacity = %d\n", chunk->capacity);
@@ -39,6 +45,9 @@ void printChunk(Chunk* chunk) {
 }
 
 int main(int argc, const char* argv[]) {
+
+	//checkSizes();
+
 	Chunk chunk;
   	initChunk(&chunk);
 
@@ -46,8 +55,8 @@ int main(int argc, const char* argv[]) {
 
   	writeChunk(&chunk, OP_CONSTANT,123);
   	writeChunk(&chunk, constant,123);
-	writeChunk(&chunk, OP_CONSTANT,222);
-	writeChunk(&chunk, constant,222);
+	writeChunk(&chunk, OP_CONSTANT_LONG,223);
+	writeConstant(&chunk, 2.4, 223);
 	writeChunk(&chunk, OP_CONSTANT,456);
   	writeChunk(&chunk, constant,456);
   	writeChunk(&chunk, OP_RETURN,678);
@@ -55,13 +64,13 @@ int main(int argc, const char* argv[]) {
 	printChunk(&chunk);
 
 	disassembleChunk(&chunk, "test chunk");
-	getLine(&chunk,0);
-	getLine(&chunk,1);
-	getLine(&chunk,2);
-	getLine(&chunk,3);
-	getLine(&chunk,4);
-	getLine(&chunk,5);
-	getLine(&chunk,6);
-  	freeChunk(&chunk);
+//	getLine(&chunk,0);
+//	getLine(&chunk,1);
+//	getLine(&chunk,2);
+//	getLine(&chunk,3);
+//	getLine(&chunk,4);
+//	getLine(&chunk,5);
+//	getLine(&chunk,6);
+// 	freeChunk(&chunk);
   	return 0;
 }
