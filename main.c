@@ -60,8 +60,8 @@ int main(int argc, const char* argv[]) {
 	writeChunk(&chunk, OP_CONSTANT_LONG,223);
 	writeConstant(&chunk, 2.4, 223);
 	writeChunk(&chunk, OP_CONSTANT,456);
-  	writeChunk(&chunk, constant,456);
-  	writeChunk(&chunk, OP_RETURN,678);
+ 	writeChunk(&chunk, constant,456);
+	writeChunk(&chunk, OP_RETURN,678);
 
 //	printChunk(&chunk);
 

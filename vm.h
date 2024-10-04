@@ -6,6 +6,7 @@
 typedef struct {
   Chunk* chunk;
   uint8_t* ip;
+  uint16_t* lc;
 } VM;
 
 typedef enum {
