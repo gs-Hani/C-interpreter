@@ -9,10 +9,6 @@ static void resetStack() {
   vm.stackTop = vm.stack;
 }
 
-static void resetStack() {
-  vm.stackTop = vm.stack;
-}
-
 void initVM() {
 	resetStack();
 }
@@ -37,24 +33,31 @@ static InterpretResult run() {
 	#define READ_CONSTANT_LONG() (vm.chunk->constants.values[READ_BYTE_LONG()])
 	for (;;) {
 		#ifdef DEBUG_TRACE_EXECUTION
+			printf("          ");
+    			for (Value* slot = vm.stack; slot < vm.stackTop; slot++) {
+      				printf("[ ");
+      				printValue(*slot);
+      				printf(" ]");
+    			}
+    			printf("\n");
     			disassembleInstruction(vm.chunk,(int)(vm.ip - vm.chunk->code));
 		#endif
 		uint8_t instruction;
 		switch (instruction = READ_BYTE()) {
 			case OP_CONSTANT: {
         			Value constant = READ_CONSTANT();
-        			printValue(constant);
-        			printf("\n");
+        			push(constant);
         			break;
       			}
 			case OP_CONSTANT_LONG: {
 				Value constant = READ_CONSTANT_LONG();
 				READ_BYTE();
-				printValue(constant);
-				printf("\n");
+				push(constant);
 				break;
 			}	       
       			case OP_RETURN: {
+				printValue(pop());
+				printf("\n");
         			return INTERPRET_OK;
       			}
     		}
