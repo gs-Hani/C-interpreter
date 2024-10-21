@@ -43,25 +43,53 @@ void printChunk(Chunk* chunk) {
 			printf(",%d",chunk->linesRep[i]);
 		}
 	}
+	printf("Constants count = %d\n", chunk->constants.count);
+	printf("Constnats capacity = %d\n", chunk->constants.capacity);
+	printf("Constants:");
+	for (int i = 0; i<chunk->constants.count; i++) {
+		if (i==chunk->constants.count-1) {
+			printf(",%g\n",chunk->constants.values[i]);
+		} else {
+			printf(",%g",chunk->constants.values[i]);
+		}
+	}
+	printf("\n");
 }
 
 int main(int argc, const char* argv[]) {
 
 	//checkSizes();
-	initVM();
+//	initVM();
 
 	Chunk chunk;
   	initChunk(&chunk);
 
-	int constant = addConstant(&chunk, 1.2);
+//	printChunk(&chunk);
 
-  	writeChunk(&chunk, OP_CONSTANT,123);
-  	writeChunk(&chunk, constant,123);
-	writeChunk(&chunk, OP_CONSTANT_LONG,223);
-	writeConstant(&chunk, 2.4, 223);
-	writeChunk(&chunk, OP_CONSTANT,456);
- 	writeChunk(&chunk, constant,456);
-	writeChunk(&chunk, OP_RETURN,678);
+  	int constant = addConstant(&chunk, 1.2);
+  	writeChunk(&chunk, OP_CONSTANT, 123);
+  	writeChunk(&chunk, constant, 123);
+	
+	printChunk(&chunk);
+
+  	constant = addConstant(&chunk, 3.4);
+  	writeChunk(&chunk, OP_CONSTANT, 123);
+  	writeChunk(&chunk, constant, 123);
+
+	printChunk(&chunk);
+
+//  	writeChunk(&chunk, OP_ADD, 123);
+
+//  	constant = addConstant(&chunk, 5.6);
+//  	writeChunk(&chunk, OP_CONSTANT, 123);
+//  	writeChunk(&chunk, constant, 123);
+
+//  	writeChunk(&chunk, OP_DIVIDE, 123);
+
+//  	writeChunk(&chunk, OP_NEGATE, 123);
+
+  	writeChunk(&chunk, OP_RETURN, 123);
+
 
 //	printChunk(&chunk);
 
@@ -75,8 +103,8 @@ int main(int argc, const char* argv[]) {
 //	getLine(&chunk,5);
 //	getLine(&chunk,6);
 
-	interpret(&chunk);
-	freeVM();
+//	interpret(&chunk);
+//	freeVM();
  	freeChunk(&chunk);
   	return 0;
 }

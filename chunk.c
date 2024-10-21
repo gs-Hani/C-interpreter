@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+#include <stdio.h>
 #include "chunk.h"
 #include "memory.h"
 
@@ -41,8 +41,7 @@ void writeChunk(Chunk* chunk, uint8_t byte,int line ) {
 	chunk->count++;
 	
 	updateLine(chunk, line);
-
-	if(byte == OP_CONSTANT_LONG) {
+	if(byte == OP_CONSTANT_LONG && chunk->code[chunk->count] > 2) {
 		chunk->code[chunk->count] = byte;
 		chunk->count++;
 	}
