@@ -59,32 +59,34 @@ void printChunk(Chunk* chunk) {
 int main(int argc, const char* argv[]) {
 
 	//checkSizes();
-//	initVM();
+	initVM();
 
 	Chunk chunk;
   	initChunk(&chunk);
 
 //	printChunk(&chunk);
 
-  	int constant = addConstant(&chunk, 1.2);
+  	int constant = addConstant(&chunk, 1);
   	writeChunk(&chunk, OP_CONSTANT, 123);
   	writeChunk(&chunk, constant, 123);
 	
-	printChunk(&chunk);
+//	printChunk(&chunk);
 
-  	constant = addConstant(&chunk, 3.4);
+  	constant = addConstant(&chunk, 2);
   	writeChunk(&chunk, OP_CONSTANT, 123);
   	writeChunk(&chunk, constant, 123);
 
-	printChunk(&chunk);
+//	printChunk(&chunk);
 
-//  	writeChunk(&chunk, OP_ADD, 123);
+  	constant = addConstant(&chunk, 3);	
+  	writeChunk(&chunk, OP_CONSTANT, 123);
+  	writeChunk(&chunk, constant, 123);
 
-//  	constant = addConstant(&chunk, 5.6);
-//  	writeChunk(&chunk, OP_CONSTANT, 123);
-//  	writeChunk(&chunk, constant, 123);
+	writeChunk(&chunk, OP_NEGATE , 123);
 
-//  	writeChunk(&chunk, OP_DIVIDE, 123);
+	writeChunk(&chunk, OP_MULTIPLY , 123);
+  	
+	writeChunk(&chunk, OP_ADD , 123);
 
 //  	writeChunk(&chunk, OP_NEGATE, 123);
 
@@ -103,8 +105,8 @@ int main(int argc, const char* argv[]) {
 //	getLine(&chunk,5);
 //	getLine(&chunk,6);
 
-//	interpret(&chunk);
-//	freeVM();
+	interpret(&chunk);
+	freeVM();
  	freeChunk(&chunk);
   	return 0;
 }

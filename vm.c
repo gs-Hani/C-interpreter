@@ -3,11 +3,14 @@
 #include "common.h"
 #include "debug.h"
 #include "vm.h"
+#include "memory.h"
 
 VM vm;
 
 static void resetStack() {
-  vm.stackTop = vm.stack;
+	vm.stackCount = 0;
+	vm.stackMax = 0;
+  	vm.stackTop = vm.stack;
 }
 
 void initVM() {
@@ -18,13 +21,36 @@ void freeVM() {
 }
 
 void push(Value value) {
-  *vm.stackTop = value;
-  vm.stackTop++;
+
+//printf("size of top = %zu, size of stack = %zu\n", sizeof(vm.stackTop),sizeof(vm.stack));
+//	size_t vmCount  = (sizeof(vm.stackTop)/sizeof(vm.stack))-1;
+	
+//	printf("before: stackMax = %zu, stackCount = %zu\n", vm.stackMax,vm.stackCount);
+
+	       	if (vm.stackMax < vm.stackCount+1 ) {
+		size_t old_capacity = vm.stackMax;
+		vm.stackMax = GROW_CAPACITY(old_capacity);
+		vm.stack = GROW_ARRAY(Value, vm.stack, old_capacity, vm.stackMax);
+		vm.stackTop = vm.stack + vm.stackCount;	
+	}
+
+	
+	vm.stackCount++;
+  	*vm.stackTop = value;
+//	printf("after: stackMax = %zu, stackCount = %zu\n", vm.stackMax,vm.stackCount);
+  	vm.stackTop++;
 }
 
 Value pop() {
   vm.stackTop--;
+  vm.stackCount--;
   return *vm.stackTop;
+}
+
+void negate() {
+	vm.stackTop--;
+	*vm.stackTop = -*vm.stackTop;
+	vm.stackTop++;
 }
 
 static InterpretResult run() {
@@ -67,7 +93,8 @@ static InterpretResult run() {
 			case OP_SUBTRACT:	BINARY_OP(-); break;
 			case OP_MULTIPLY:	BINARY_OP(*); break;
 			case OP_DIVIDE:		BINARY_OP(/); break;
-			case OP_NEGATE: 	push(-pop()); break;	       
+//			case OP_NEGATE: 	push(-pop()); break; 
+			case OP_NEGATE: 	negate()    ; break;	       
       			case OP_RETURN: {
 				printValue(pop());
 				printf("\n");
