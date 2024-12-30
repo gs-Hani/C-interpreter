@@ -59,56 +59,56 @@ static void runFile(const char* path) {
 	if (result == INTERPRET_RUNTIME_ERROR) exit(70);
 }
 
-void checkSizes() {
-	printf("int = %lu\n",sizeof(int));
-	printf("uint16_t = %lu\n",sizeof(uint16_t));
-	printf("double = %lu\n",sizeof(double));
-}
-
-void printChunk(Chunk* chunk) {
-	printf("Count = %d\n", chunk->count);
-	printf("Capacity = %d\n", chunk->capacity);
-	printf("lineCount = %d\n", chunk->lineCount);
-	printf("lineCapacity = %d\n", chunk->lineCapacity);
-
-	printf("Codes:");
-	for (int i = 0; i< chunk->count; i++) {
-		if (i==chunk->count-1) {
-			printf(",%d\n",chunk->code[i]);
-		} else {
-			printf(",%d",chunk->code[i]);
-		}
-	}
-
-	printf("lines:");
-	for (int i = 0; i< chunk->lineCount; i++) {
-		if (i==chunk->lineCount-1) {
-			printf(",%d\n",chunk->lines[i]);
-		} else {
-			printf(",%d",chunk->lines[i]);
-		}
-	}
-
-	printf("Lines repetition:");
-	for (int i = 0; i< chunk->lineCount; i++) {
-		if (i==chunk->lineCount-1) {
-			printf(",%d\n",chunk->linesRep[i]);
-		} else {
-			printf(",%d",chunk->linesRep[i]);
-		}
-	}
-	printf("Constants count = %d\n", chunk->constants.count);
-	printf("Constnats capacity = %d\n", chunk->constants.capacity);
-	printf("Constants:");
-	for (int i = 0; i<chunk->constants.count; i++) {
-		if (i==chunk->constants.count-1) {
-			printf(",%g\n",chunk->constants.values[i]);
-		} else {
-			printf(",%g",chunk->constants.values[i]);
-		}
-	}
-	printf("\n");
-}
+//void checkSizes() {
+//	printf("int = %lu\n",sizeof(int));
+//	printf("uint16_t = %lu\n",sizeof(uint16_t));
+//	printf("double = %lu\n",sizeof(double));
+//}
+//
+//void printChunk(Chunk* chunk) {
+//	printf("Count = %d\n", chunk->count);
+//	printf("Capacity = %d\n", chunk->capacity);
+//	printf("lineCount = %d\n", chunk->lineCount);
+//	printf("lineCapacity = %d\n", chunk->lineCapacity);
+//
+//	printf("Codes:");
+//	for (int i = 0; i< chunk->count; i++) {
+//		if (i==chunk->count-1) {
+//			printf(",%d\n",chunk->code[i]);
+//		} else {
+//			printf(",%d",chunk->code[i]);
+//		}
+//	}
+//
+//	printf("lines:");
+//	for (int i = 0; i< chunk->lineCount; i++) {
+//		if (i==chunk->lineCount-1) {
+//			printf(",%d\n",chunk->lines[i]);
+//		} else {
+//			printf(",%d",chunk->lines[i]);
+//		}
+//	}
+//
+//	printf("Lines repetition:");
+//	for (int i = 0; i< chunk->lineCount; i++) {
+//		if (i==chunk->lineCount-1) {
+//			printf(",%d\n",chunk->linesRep[i]);
+//		} else {
+//			printf(",%d",chunk->linesRep[i]);
+//		}
+//	}
+//	printf("Constants count = %d\n", chunk->constants.count);
+//	printf("Constnats capacity = %d\n", chunk->constants.capacity);
+//	printf("Constants:");
+//	for (int i = 0; i<chunk->constants.count; i++) {
+//		if (i==chunk->constants.count-1) {
+//			printf(",%g\n",chunk->constants.values[i]);
+//		} else {
+//			printf(",%g",chunk->constants.values[i]);
+//		}
+//	}
+//	printf("\n");
+//}
 
 int main(int argc, const char* argv[]) {
 

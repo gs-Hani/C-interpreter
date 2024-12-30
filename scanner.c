@@ -8,12 +8,16 @@ typedef struct {
 	const char* start;
 	const char* current;
 	int line;
+	bool interpolating;
 } Scanner;
+
+Scanner scanner;
 
 void initScanner(const char* source) {
 	scanner.start = source;
 	scanner.current = source;
 	scanner.line = 1;
+	scanner.interpolating = false;
 }
 
 static bool isAlpha(char c) {
@@ -159,12 +163,20 @@ static Token number() {
 }
 
 static Token string() {
-	while (peek() != '"' && !isAtEnd()) {
+	scanner.interpolating = false; 
+	while (peek() != '"' && !isAtEnd() && (peek() != '$' && peekNext() != '{')) {
 		if (peek() == '\n') scanner.line++;
 		advance();
 	}
 
 	if (isAtEnd()) return errorToken("Unterminated string.");
+	
+	// Start of interpolation	
+	if (peek() == '$' && peekNext() == '{') {
+		advance(); advance();
+		scanner.interpolating = true;
+		return makeToken(TOKEN_STRING_INTERP);
+	} 
 
 	// The closing quote.
 	advance();
@@ -188,7 +200,7 @@ Token scanToken() {
 		case '(': return makeToken(TOKEN_LEFT_PAREN);
     		case ')': return makeToken(TOKEN_RIGHT_PAREN);
     		case '{': return makeToken(TOKEN_LEFT_BRACE);
-    		case '}': return makeToken(TOKEN_RIGHT_BRACE);
+		case '}': return scanner.interpolating ? string() : makeToken(TOKEN_RIGHT_BRACE);
     		case ';': return makeToken(TOKEN_SEMICOLON);
     		case ',': return makeToken(TOKEN_COMMA);
     		case '.': return makeToken(TOKEN_DOT);
@@ -200,11 +212,9 @@ Token scanToken() {
     		case '=': return makeToken(match('=') ? TOKEN_EQUAL_EQUAL : TOKEN_EQUAL);
     		case '<': return makeToken(match('=') ? TOKEN_LESS_EQUAL : TOKEN_LESS);
     		case '>': return makeToken(match('=') ? TOKEN_GREATER_EQUAL : TOKEN_GREATER);
-		case '"': return string();
+		case '"': return scanner.interpolating ? errorToken("Unterminated interpolation") : string();
+		case '$': if (scanner.interpolating && match('{')) return errorToken("Nested interpolation"); 
   	}
 
 	return errorToken("Unexpected character.");
 }
-
-
-Scanner scanner;
